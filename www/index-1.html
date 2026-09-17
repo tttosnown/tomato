@@ -358,8 +358,12 @@ function dayRecordSummary(ds){
 }
 function formatStudySeconds(sec){sec=Math.max(0,Math.floor(Number(sec)||0));let h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60;return h?`${h}h${String(m).padStart(2,'0')}m`:m?`${m}m${String(s).padStart(2,'0')}s`:`${s}s`}
 function getTaskStudySeconds(id){let e=studyTimeData[String(id)];return Number(e?.total)||0}
-function timerReconcile(){if(activeTimerTaskId==null)return;let e=studyTimeData[String(activeTimerTaskId)];if(!e||!e.running||!e.startedAt){activeTimerTaskId=null;return}if(!tasks.some(t=>String(t.id)===String(activeTimerTaskId))){activeTimerTaskId=null;return}}
-function saveStudyTime(){saveData('study_time',studyTimeData)}
+function timerReconcile(){if(activeTimerTaskId==null)return;let e=studyTimeData[String(activeTimerTaskId)];if(!e||!e.running||!e.startedAt){activeTimerTaskId=null;return}if(!e.sessionStartedAt)e.sessionStartedAt=e.startedAt;if(!tasks.some(t=>String(t.id)===String(activeTimerTaskId))){activeTimerTaskId=null;return}}
+function saveStudyTime(){saveData('study_time',studyTimeData)}function saveStudySessions(){saveData('study_sessions',studySessions)}
+function pad2(n){return String(n).padStart(2,'0')}
+function localHM(ms){const d=new Date(ms);return pad2(d.getHours())+':'+pad2(d.getMinutes())}
+function recordStudySession(taskId,startMs,endMs){if(!startMs||!endMs||endMs<=startMs)return;const t=tasks.find(x=>String(x.id)===String(taskId));if(!t)return;let cursor=startMs;while(cursor<endMs){const d=new Date(cursor),ds=localDateString(d),next=new Date(d);next.setHours(24,0,0,0);const segEnd=Math.min(endMs,next.getTime()),sec=Math.max(0,Math.floor((segEnd-cursor)/1000));if(sec>0)studySessions.push({id:Date.now()+studySessions.length,taskId:String(taskId),date:ds,start:localHM(cursor),end:localHM(segEnd),startAt:cursor,endAt:segEnd,durationSec:sec,desc:t.title||'学习任务',subject:t.subject||'其他',source:'timer'});cursor=segEnd}studySessions.sort((a,b)=>(a.startAt||0)-(b.startAt||0));saveStudySessions()}
+
 function startTaskTimer(id){
   const t=tasks.find(x=>String(x.id)===String(id));if(!t)return;
   if(activeTimerTaskId!=null&&String(activeTimerTaskId)!==String(id))pauseTaskTimer(activeTimerTaskId);
@@ -368,8 +372,8 @@ function startTaskTimer(id){
   e.running=true;e.startedAt=Date.now();e.date=t.date||todayStr;studyTimeData[key]=e;activeTimerTaskId=id;activeTimerStartedAt=e.startedAt;saveStudyTime();startTimerTicker();renderDashboard();
 }
 function accrueTaskTimer(id){const e=studyTimeData[String(id)];if(!e?.running||!e.startedAt)return 0;const now=Date.now(),delta=Math.max(0,Math.floor((now-e.startedAt)/1000));if(delta>0){e.total=(Number(e.total)||0)+delta;e.startedAt=now;studyTimeData[String(id)]=e;saveStudyTime()}return delta}
-function pauseTaskTimer(id){const key=String(id),e=studyTimeData[key];if(!e?.running)return;accrueTaskTimer(id);e.running=false;e.startedAt=null;studyTimeData[key]=e;if(String(activeTimerTaskId)===key){activeTimerTaskId=null;activeTimerStartedAt=0;stopTimerTicker()}saveStudyTime();renderDashboard()}
-function resetTaskTimer(id){const key=String(id);if(String(activeTimerTaskId)===key){const e=studyTimeData[key];if(e?.running){e.running=false;e.startedAt=null}activeTimerTaskId=null;stopTimerTicker()}studyTimeData[key]={total:0,running:false,startedAt:null,date:tasks.find(t=>String(t.id)===key)?.date||todayStr};saveStudyTime();renderDashboard()}
+function pauseTaskTimer(id){const key=String(id),e=studyTimeData[key];if(!e?.running)return;const sessionStart=Number(e.sessionStartedAt||e.startedAt||0),endMs=Date.now();accrueTaskTimer(id);e.running=false;e.startedAt=null;e.sessionStartedAt=null;studyTimeData[key]=e;if(sessionStart&&endMs>sessionStart)recordStudySession(id,sessionStart,endMs);if(String(activeTimerTaskId)===key){activeTimerTaskId=null;activeTimerStartedAt=0;stopTimerTicker()}saveStudyTime();renderDashboard()}
+function resetTaskTimer(id){const key=String(id);if(String(activeTimerTaskId)===key){const e=studyTimeData[key];if(e?.running){e.running=false;e.startedAt=null;e.sessionStartedAt=null}activeTimerTaskId=null;stopTimerTicker()}studyTimeData[key]={total:0,running:false,startedAt:null,sessionStartedAt:null,date:tasks.find(t=>String(t.id)===key)?.date||todayStr};studySessions=studySessions.filter(x=>String(x.taskId)!==key);saveStudyTime();saveStudySessions();renderDashboard()}
 function toggleTaskTimer(id){const e=studyTimeData[String(id)];if(e?.running)pauseTaskTimer(id);else startTaskTimer(id)}
 function startTimerTicker(){if(timerTickHandle)return;timerTickHandle=setInterval(()=>{if(activeTimerTaskId==null)return;const e=studyTimeData[String(activeTimerTaskId)];if(!e?.running){stopTimerTicker();return}renderTaskTimersOnly();},1000)}
 function stopTimerTicker(){if(timerTickHandle){clearInterval(timerTickHandle);timerTickHandle=null}}

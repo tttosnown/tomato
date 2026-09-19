@@ -115,7 +115,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:
 
 .daily-time-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.daily-time-item{background:#F7F4F8;border-radius:10px;padding:11px}.daily-time-subject{font-size:11px;color:var(--sub);margin-bottom:4px}.daily-total{margin-top:10px;padding:11px;border-radius:10px;background:#EEE8F2;text-align:center}.time-chart-title{font-size:12px;font-weight:600;margin:12px 0 8px}.time-bars{display:flex;align-items:flex-end;justify-content:space-between;gap:7px;height:140px;padding:0 4px}.time-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;font-size:9px}.time-bar{width:100%;max-width:30px;background:#111;border-radius:5px 5px 2px 2px;min-height:4px}.time-bar-col small{font-size:10px;color:var(--sub)}.weekly-time-meta{text-align:center;font-size:12px;margin-top:8px;padding:9px;background:#F7F4F8;border-radius:8px}
 
-/* Paper texture overlay: grayscale only, blended with white UI surfaces using multiply. */
+/* Soft paper texture: white surface at ~60% opacity + subtle colored texture in multiply mode. */
 .paper-texture-surface,
 header,
 nav.tab-bar,
@@ -141,11 +141,13 @@ nav.tab-bar,
 .recall-question,
 .recall-opt,
 [style*="background:#F9F9FB"] {
-  background-image:url('./paper-texture-gray.png');
-  background-repeat:no-repeat;
-  background-size:cover;
+  background-color:rgba(255,255,255,.60);
+  background-image:url('./paper-texture-soft.png');
+  background-repeat:repeat;
+  background-size:720px 720px;
   background-blend-mode:multiply;
 }
+
 
 </style>
 </head>

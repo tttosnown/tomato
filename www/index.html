@@ -215,6 +215,39 @@ nav.tab-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:mi
 #tab-dashboard .calendar-card{display:none}
 #tab-dashboard>.day-status-card{display:block;grid-column:1 / -1;margin-bottom:16px}
 @media(max-width:390px){.feature-row{gap:2px}.feature-item img{width:46px;height:46px}.feature-item{font-size:10px}.dashboard-grid{gap:9px}.card{padding:15px}.duration-art{width:205px}.duration-value{font-size:38px}}
+
+/* Paper texture overlay: grayscale only, blended with white UI surfaces using multiply. */
+.paper-texture-surface,
+header,
+nav.tab-bar,
+.day-status-item,
+.day-records,
+.day-record-item,
+.side-menu,
+.focus-panel,
+.calendar-mode,
+.study-stat-box,
+.tomato-quick-menu,
+.tomato-quick-item,
+.card,
+.mix-card,
+.task-item,
+.swipe-content,
+.timeline-day,
+.timeline-live-item,
+.routine-day,
+.month-cell,
+.tree-node-content,
+.modal-content,
+.recall-question,
+.recall-opt,
+[style*="background:#F9F9FB"] {
+  background-image:url('./paper-texture-gray.png');
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-blend-mode:multiply;
+}
+
 </style>
 </head>
 <body>

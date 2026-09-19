@@ -55,21 +55,21 @@ nav.tab-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.
 .study-stat{background:var(--soft,#f8f8fa);border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
 .study-stat .num{font-size:20px;font-weight:700;line-height:1.2}.study-stat .label{font-size:11px;color:var(--sub);margin-top:4px}
 .study-chart-title{font-size:12px;font-weight:600;margin:12px 0 8px}
-.week-bars{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;align-items:end;height:120px;padding:4px 2px 0}
-.week-bar-col{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px}
-.week-bar{width:22px;max-width:70%;min-height:3px;border-radius:6px 6px 3px 3px;background:#F1F0BA}
-.week-bar-num{font-size:9px;color:var(--sub)}.week-bar-day{font-size:10px;color:var(--sub)}
+.week-bars{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;align-items:end;height:120px;width:100%;max-width:100%;box-sizing:border-box;padding:4px 2px 0;overflow:hidden}
+.week-bar-col{height:100%;min-width:0;width:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;overflow:hidden;box-sizing:border-box}
+.week-bar{width:16px;max-width:58%;min-height:3px;border-radius:6px 6px 3px 3px;background:#F1F0BA}
+.week-bar-num{font-size:8px;color:var(--sub);line-height:1;max-width:100%;overflow:hidden}.week-bar-day{font-size:8px;color:var(--sub);line-height:1;white-space:nowrap;max-width:100%;overflow:hidden;text-align:center}
 .subject-bars{display:grid;gap:7px}.subject-row{display:grid;grid-template-columns:72px 1fr 38px;gap:7px;align-items:center;font-size:11px}
 .subject-track{height:8px;background:var(--soft,#f2f2f5);border-radius:99px;overflow:hidden}.subject-fill{height:100%;border-radius:99px;background:#F1F0BA}
 
 .day-status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.day-status-item{min-width:0;background:#FAFAFC;border:.5px solid var(--line);border-radius:10px;padding:10px 7px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--text);font:inherit}
+.day-status-item{min-width:0;width:100%;min-height:76px;box-sizing:border-box;background:rgba(255,255,255,.56);border:.5px solid rgba(120,100,90,.08);border-radius:17px;padding:12px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--text);font:inherit}
 .day-status-item:active{background:#F1F1F3}
 .day-status-name{font-size:11px;color:var(--sub)}
 .day-status-value{font-size:11px;min-height:20px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .routine-status{display:flex;justify-content:center;align-items:center;gap:3px;min-height:20px;margin-top:3px}
 .routine-coffee{font-size:12px;line-height:1}
-@media(max-width:430px){.day-status-grid{gap:5px}.day-status-item{padding:9px 4px}.day-status-value{font-size:10px}}
+@media(max-width:430px){.day-status-card #dayStatusContainer .day-status-grid{gap:7px}.day-status-item{min-height:72px;padding:9px 4px;gap:5px}.day-status-value{font-size:10px}}
 .day-records{margin-top:10px;padding:11px 12px;background:#F9F9FB;border:.5px solid var(--line);border-radius:10px}.day-record-head{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px}.day-record-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:9px}.day-record-item{min-width:0;background:#fff;border:.5px solid var(--line);border-radius:8px;padding:8px 6px;display:flex;flex-direction:column;gap:5px}.day-record-label{font-size:10px;color:var(--sub)}.day-record-value{font-size:11px;min-height:20px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;text-overflow:ellipsis}.day-record-value .mood-face{width:30px;height:30px;display:inline-block;object-fit:cover;border-radius:50%;vertical-align:middle;flex:0 0 auto;clip-path:circle(50%)}
 .mood-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
 .mood-option{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 4px 7px;text-align:center;cursor:pointer;font-size:11px;color:var(--text);min-width:0}
@@ -119,29 +119,104 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:
 
 .tomato-inline{width:28px;height:28px;object-fit:contain;display:inline-block;vertical-align:middle;margin-left:4px;pointer-events:none}.tomato-card-mark{width:42px;height:42px;object-fit:contain;display:block;margin-left:auto;margin-top:-2px;margin-bottom:-4px;pointer-events:none}.difficulty-dots{display:inline-flex;gap:3px;vertical-align:middle;margin-left:3px}.difficulty-dot{width:7px;height:7px;border-radius:50%;background:#E52113;display:inline-block}.difficulty-dot.off{opacity:.16}.focus-modal{display:none;position:fixed;inset:0;background:rgba(242,240,186,.22);backdrop-filter:blur(8px);z-index:2500;align-items:center;justify-content:center;padding:20px}.focus-modal.active{display:flex}.focus-panel{width:min(420px,100%);background:rgba(255,255,255,.97);border-radius:24px;padding:22px 18px 18px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.12);border:1px solid rgba(147,172,78,.22)}.focus-title{font-size:14px;color:var(--sub);margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.focus-ring-wrap{position:relative;width:min(72vw,300px);height:min(72vw,300px);margin:4px auto 12px}.focus-ring{width:100%;height:100%;display:block}.focus-tomato{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:105px;height:105px;object-fit:contain;display:block;pointer-events:none}.focus-ring-bg{fill:none;stroke:#F1F0BA;stroke-width:10}.focus-ring-progress{fill:none;stroke:#E52113;stroke-width:10;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset .3s linear}.focus-time{font-size:34px;font-weight:700;letter-spacing:1px;margin-top:-2px}.focus-progress-text{font-size:11px;color:var(--sub);margin-top:5px}.focus-actions{display:flex;gap:8px;margin-top:16px}.focus-actions .btn{flex:1}.focus-note{font-size:10px;color:var(--sub);margin-top:10px}.task-focus-btn{background:#E52113 !important;color:#fff !important}
 
-/* ===== 视觉优化层：只改外观，不改数据结构与交互逻辑 ===== */
-:root{--ui-pink:#f07f86;--ui-pink-soft:#fff0f1;--ui-peach:#fff8f4;--ui-green:#8fae6d;--ui-ink:#2d2928;--ui-muted:#8f8883}
-body{background:var(--time-bg,var(--bg));transition:background-color .35s ease;color:var(--ui-ink)}
-.card{background:rgba(255,252,248,.88);border:1px solid rgba(215,196,185,.34);box-shadow:0 7px 24px rgba(116,84,66,.055);border-radius:22px}
-.container{padding:14px 14px 18px}
-.dashboard-duration{position:relative;display:flex;align-items:center;min-height:132px;padding:14px 16px;margin-bottom:12px;overflow:hidden;background:linear-gradient(115deg,rgba(255,250,248,.96),rgba(255,240,239,.84));border:1px solid rgba(230,189,181,.42);border-radius:24px}
-.duration-icon-frame{width:58px;height:58px;flex:0 0 58px;border-radius:18px;background:rgba(255,255,255,.78);border:1px solid rgba(239,185,184,.52);display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 5px rgba(255,244,244,.72)}
-.duration-icon-frame img{width:44px;height:44px;object-fit:contain}
-.duration-main{min-width:0;flex:1;margin-left:12px}.duration-kicker{font-size:12px;font-weight:650;color:#5e5753;display:flex;align-items:center;gap:5px}.duration-value{font-size:36px;line-height:1.02;font-weight:700;letter-spacing:-1.4px;margin:7px 0 9px}.duration-track{height:7px;border-radius:99px;background:rgba(225,206,199,.56);overflow:hidden;max-width:220px}.duration-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#f47f86,#ef9a9c)}.duration-subjects{display:flex;gap:12px;margin-top:9px;flex-wrap:wrap}.duration-subject{font-size:9px;color:#746d68;display:flex;align-items:center;gap:3px}.duration-subject i{width:6px;height:6px;border-radius:50%;display:inline-block}.duration-note{position:absolute;right:13px;bottom:11px;font-size:10px;color:#bc8584;opacity:.78;font-family:cursive;transform:rotate(-4deg)}
-.dashboard-main-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(145px,.88fr);gap:12px;align-items:stretch;margin-bottom:12px}.dashboard-main-grid>.card{margin-bottom:0;height:100%}
-.study-card h2,.status-card h2{font-size:16px}.study-card{padding:15px}.study-card .study-stat-grid{gap:7px;margin-bottom:12px}.study-card .study-stat{background:rgba(255,255,255,.62);border-color:rgba(214,197,188,.45);border-radius:14px;padding:9px 4px}.study-card .study-stat .num{font-size:22px}.study-card .study-chart-title{margin:10px 0 6px}.study-card .week-bars{height:92px}.study-card .subject-bars{gap:6px}.study-card .subject-row{grid-template-columns:46px 1fr 22px;gap:5px;font-size:10px}.study-card .subject-track{height:7px}
-.status-card{display:flex;flex-direction:column}.status-card h2{margin-bottom:8px}.status-card .day-status-grid{display:flex;flex-direction:column;gap:7px;flex:1}.status-card .day-status-item{flex:1;min-height:0;padding:10px 7px;border-radius:15px;background:rgba(255,255,255,.62);border-color:rgba(214,197,188,.42)}.status-card .day-status-name{font-size:10px}.status-card .day-status-value{font-size:11px;line-height:1.3;min-height:22px}.status-card .mood-face{width:28px!important;height:28px!important}
-.dashboard-routine .routine-day{background:rgba(255,255,255,.58);border-color:rgba(214,197,188,.42);border-radius:13px;padding:7px 3px}.dashboard-routine .routine-day.selected{transform:scale(1.08);background:#fffaf8;border-color:#e8848a;box-shadow:0 5px 14px rgba(194,115,109,.16),inset 0 0 0 1px rgba(232,132,138,.45)}.dashboard-routine .routine-day.today{background:#fff4f2;border-color:#ef9c99}.dashboard-routine .dot{width:8px;height:8px}.dashboard-routine .routine-extra{color:#817a75}.dashboard-routine .routine-extra .routine-coffee{font-size:12px}.dashboard-routine .routine-extra .routine-distract{font-size:9px}
-.ui-icon{width:18px;height:18px;display:inline-block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-4px}.ui-icon.sm{width:15px;height:15px}.ui-icon.lg{width:21px;height:21px}
-.section-icon-title{display:inline-flex;align-items:center;gap:7px}.ui-add-btn{display:inline-flex!important;align-items:center;gap:4px!important;width:auto!important;border-radius:99px!important;padding:7px 11px!important;background:#ef7e83!important}.ui-add-btn .ui-icon{stroke-width:2}
-.tab-bar{background:rgba(255,252,249,.94)!important;border-top:1px solid rgba(214,197,188,.5)!important}.tab-item{color:#7f7771!important}.tab-item.active{color:#d95e67!important}.tab-item span{font-size:18px!important}
-@media(max-width:480px){.dashboard-main-grid{grid-template-columns:minmax(0,1.08fr) minmax(126px,.82fr);gap:9px}.dashboard-duration{min-height:124px;padding:13px}.duration-value{font-size:34px}.duration-icon-frame{width:52px;height:52px;flex-basis:52px}.duration-icon-frame img{width:39px;height:39px}.study-card{padding:13px 11px}.study-card .study-stat .num{font-size:19px}.status-card{padding:13px 10px}.status-card .day-status-item{padding:9px 5px}.status-card .day-status-value{font-size:10px}.container{padding-left:10px;padding-right:10px}}
-@media(max-width:350px){.dashboard-main-grid{grid-template-columns:1fr}.status-card .day-status-grid{display:grid;grid-template-columns:repeat(3,1fr)}.status-card .day-status-item{min-height:72px}}
+/* ===== ZhuXi watercolor visual layer v4 ===== */
+:root{--bg:#fbf7f3;--card:rgba(255,255,255,.80);--card-strong:rgba(255,255,255,.84);--text:#302b28;--sub:#817a74;--line:rgba(120,100,90,.13);--pink:#ef7c82;--pink-soft:#f9dfe0;--gold:#e9aa4f;--green:#9aae78;--purple:#b493d0;--r:24px}
+html{background:#fbf7f3}
+body{max-width:600px;background:#fbf7f3;color:var(--text);padding-top:env(safe-area-inset-top,0px);padding-bottom:92px}
+body:before{content:"";position:fixed;inset:0;z-index:-2;background:#fbf7f3 url('./study-bg.png') center top/auto 560px no-repeat;opacity:.20;pointer-events:none}
+body:after{content:"";position:fixed;left:0;right:0;bottom:0;height:145px;z-index:-1;background:linear-gradient(180deg,rgba(251,247,243,0),rgba(250,220,220,.28));pointer-events:none}
+header{position:relative;top:auto;background:transparent;border:0;backdrop-filter:none;padding:22px 24px 8px;z-index:10}
+header h1{height:38px;font-size:0}
+header h1>span:first-child{display:flex!important;align-items:center;gap:5px}
+header h1>span:first-child img{width:30px;height:30px;object-fit:contain}
+header h1>span:first-child span{font-size:22px!important;color:#4b4541!important;font-weight:700!important;letter-spacing:.3px}
+header h1>span:first-child:before{content:'筑习';font-size:27px;color:#df6f73;font-weight:700;letter-spacing:1px;font-family:cursive;margin-right:2px}
+header .header-actions .menu-trigger{width:42px;height:42px;border-radius:15px;background:rgba(239,124,130,.96)!important;color:#fff!important;border:0!important;font-size:25px;line-height:1}
+.container{padding:8px 16px 0}
+.card{background:var(--card);border:1px solid rgba(120,90,80,.10);border-radius:var(--r);padding:18px;margin-bottom:16px;box-shadow:0 5px 20px rgba(116,91,75,.045);backdrop-filter:blur(8px)}
+.card h2{font-size:18px;font-weight:700;color:#342e2b;margin-bottom:12px}
+.muted{color:#8a817a}
+.btn{background:#ef7c82;border:0;border-radius:999px;color:#fff;font-weight:650;padding:10px 15px;box-shadow:none}
+.btn-secondary{background:rgba(255,255,255,.65)!important;color:#766d67!important;border:1px solid rgba(120,100,90,.12)!important}
+/* week/month unified */
+.calendar-unified{padding:17px 14px 15px}
+.calendar-unified .routine-week-head{margin-bottom:4px}
+.calendar-unified .routine-week-title{font-size:14px;color:#665e58;font-weight:650}
+.calendar-mode{display:flex;align-items:center;background:rgba(255,255,255,.62);border:1px solid rgba(120,100,90,.10);border-radius:999px;padding:2px;gap:2px}
+.calendar-mode button{border:0;background:transparent;color:#877e77;border-radius:999px;padding:6px 12px;font-size:11px}
+.calendar-mode button.active{background:#ef7c82;color:#fff}
+.routine-grid{gap:6px;margin-top:9px;touch-action:pan-y}
+.routine-day{background:rgba(255,255,255,.54);border:1px solid rgba(120,100,90,.10);border-radius:18px;padding:8px 2px 7px;min-height:120px;box-shadow:none}
+.routine-day.today{border-color:rgba(239,124,130,.40);background:rgba(255,239,239,.72)}
+.routine-day.selected{transform:scale(1.06);background:rgba(255,240,240,.94);border:1.5px solid rgba(239,124,130,.58);box-shadow:0 7px 18px rgba(210,120,120,.10),inset 0 0 0 1px rgba(255,255,255,.7);padding:9px 3px 8px}
+.routine-day.selected.today{background:rgba(255,235,235,.95)}
+.routine-status img{width:30px!important;height:30px!important}
+.routine-extra{min-height:17px}
+.color-dots{min-height:18px;margin-top:4px;gap:3px}
+.dot{width:7px;height:7px}
+#calendarBody{margin-top:12px}
+#calendarBody>div:first-child{padding:0 5px 6px}
+.month-grid{gap:6px}
+.month-cell{background:rgba(255,255,255,.48);border:1px solid rgba(120,100,90,.09);border-radius:14px;min-height:74px;padding:6px 3px}
+.month-cell.selected{background:rgba(255,236,236,.9);border-color:rgba(239,124,130,.5)}
+.month-cell .month-mood img{width:26px;height:26px}
+/* top study duration */
+.home-duration{background:rgba(255,235,235,.72);overflow:hidden;position:relative;min-height:205px;padding:20px}
+.home-duration:before{content:"";position:absolute;inset:0;background:url('./study-bg.png') right center/auto 100% no-repeat;opacity:.72;pointer-events:none}
+.home-duration>*{position:relative;z-index:1}
+.duration-title{font-size:16px;font-weight:700;display:flex;align-items:center;gap:7px}
+.duration-title img{width:27px;height:27px}
+.duration-value{font-size:42px;line-height:1.1;font-weight:750;letter-spacing:-1px;margin:10px 0 12px}
+.duration-bar{height:10px;border-radius:99px;background:rgba(255,255,255,.55);overflow:hidden;width:56%}
+.duration-bar i{display:block;height:100%;background:#ef7c82;border-radius:99px;width:57%}
+.duration-subjects{display:flex;gap:16px;margin-top:16px;font-size:11px}
+.duration-subjects>div{min-width:0}.duration-subjects b{font-size:12px;font-weight:500}.duration-subjects span{display:block;color:#786f69;margin-top:3px}
+.duration-art{position:absolute!important;right:17px;top:44px;width:235px;height:135px;object-fit:cover;object-position:right center;border-radius:0;opacity:.88;mix-blend-mode:multiply;z-index:0!important}
+/* feature row */
+.feature-row{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:13px 7px 12px}
+.feature-item{text-align:center;font-size:11px;color:#4e4844;min-width:0}
+.feature-item img{display:block;width:53px;height:53px;object-fit:contain;margin:0 auto 5px;border-radius:17px}
+.feature-item span{white-space:nowrap}
+/* dashboard lower */
+.dashboard-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;align-items:stretch}
+.dashboard-grid>.card{margin-bottom:16px}
+.study-dashboard{min-width:0}
+.day-status-card{min-width:0}
+.day-status-card #dayStatusContainer{display:block;width:100%}.day-status-card #dayStatusContainer .day-status-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%;box-sizing:border-box}
+.day-record-item{background:rgba(255,255,255,.56)!important;border:1px solid rgba(120,100,90,.08)!important;border-radius:17px!important;padding:12px 10px!important;min-height:68px;display:flex!important;flex-direction:column;justify-content:center;align-items:flex-start!important}
+.day-record-label{font-size:11px;color:#827972}.day-record-value{font-size:12px;margin-top:4px;line-height:1.3}
+.study-stat-grid{gap:6px}
+.study-stat-box{background:rgba(255,255,255,.48)!important;border:1px solid rgba(120,100,90,.09)!important;border-radius:17px!important}
+.time-bars{height:122px;gap:4px;padding:0 2px}
+.time-bar{max-width:17px;border-radius:9px 9px 3px 3px;background:#e8eab0}
+/* timeline preview */
+.timeline-preview{cursor:pointer}
+.timeline-preview .preview-row{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(120,100,90,.08)}
+.timeline-preview .preview-dot{width:8px;height:8px;border-radius:50%;background:#ef7c82;flex:0 0 auto}.timeline-preview .preview-time{font-size:10px;color:#857b74;width:72px}.timeline-preview .preview-text{font-size:11px;flex:1}
+/* icons */
+.ui-icon{width:23px;height:23px;object-fit:contain;vertical-align:middle;margin-right:5px}
+.h-title{display:flex!important;align-items:center;gap:5px}
+/* bottom navigation */
+nav.tab-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(600px,100%);height:74px;background:rgba(255,252,249,.82);border-top:1px solid rgba(120,100,90,.10);backdrop-filter:blur(18px);padding:6px 5px max(7px,env(safe-area-inset-bottom));z-index:1000}
+.tab-item{font-size:10px;color:#7b726c}.tab-item span{height:36px;font-size:0;margin-bottom:1px;background:center/34px 34px no-repeat;display:block}
+.tab-item:nth-child(1) span{background-image:url('./ui-icons/home.png')}.tab-item:nth-child(2) span{background-image:url('./ui-icons/task-nav.png')}.tab-item:nth-child(3) span{background-image:url('./ui-icons/tomato-nav.png');height:48px;background-size:56px 56px;margin-top:-15px}.tab-item:nth-child(4) span{background-image:url('./ui-icons/stats-nav.png')}.tab-item:nth-child(5) span{background-image:url('./ui-icons/me-nav.png')}.tab-item:nth-child(6) span{background-image:url('./ui-icons/more.png')}
+.tab-item.active{color:#df7076}
+/* center tomato quick menu */
+.tomato-quick-menu{position:fixed;left:50%;transform:translateX(-50%) translateY(12px);bottom:82px;width:min(430px,calc(100% - 28px));display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:9px;background:rgba(255,252,249,.90);border:1px solid rgba(120,100,90,.10);border-radius:20px;backdrop-filter:blur(18px);box-shadow:0 8px 30px rgba(120,100,90,.12);z-index:1100;opacity:0;pointer-events:none;transition:opacity .16s ease,transform .16s ease}
+.tomato-quick-menu.open{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.tomato-quick-item{min-width:0;border:1px solid rgba(120,100,90,.08);background:rgba(255,255,255,.56);border-radius:14px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#5f5752;font:inherit;cursor:pointer}
+.tomato-quick-item:active{transform:scale(.98);background:rgba(255,240,238,.72)}
+.tomato-quick-item img{width:30px;height:30px;object-fit:contain}.tomato-quick-item span{font-size:11px;white-space:nowrap}.tomato-quick-item .quick-glyph{width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#df7076;font-weight:700;line-height:1}
+@media(max-width:390px){.tomato-quick-menu{bottom:78px;width:calc(100% - 18px);gap:6px;padding:7px}.tomato-quick-item{padding:9px 3px}.tomato-quick-item img{width:27px;height:27px}.tomato-quick-item span{font-size:10px}}
+/* Make six existing destinations visually compact while preserving functions */
+#tab-dashboard .calendar-card{display:none}
+#tab-dashboard>.day-status-card{display:block;grid-column:1 / -1;margin-bottom:16px}
+@media(max-width:390px){.feature-row{gap:2px}.feature-item img{width:46px;height:46px}.feature-item{font-size:10px}.dashboard-grid{gap:9px}.card{padding:15px}.duration-art{width:205px}.duration-value{font-size:38px}}
 </style>
 </head>
-<body><svg aria-hidden="true" width="0" height="0" style="position:absolute"><use href="./ui-icons.svg#calendar"></use></svg>
+<body>
 <div id="startupSplash" aria-label="zhuxi 启动封面"><div id="startupSplashInner"><img id="startupSplashIcon" src="./tomato/logo.png" alt="筑习" onerror="this.style.display='none';document.getElementById('startupSplashFallback').style.display='flex'"><div id="startupSplashFallback" aria-hidden="true">筑</div><div id="startupSplashName">zhuxi</div></div></div>
-<header><h1><span style="display:flex;align-items:center"><img src="./icon-512.png" alt="" class="mix-title-logo" onerror="this.style.display='none'"><span style="font-size:12px;color:var(--sub);font-weight:normal">v3.0</span></span><span class="header-actions"><button class="btn btn-small btn-secondary menu-trigger" aria-label="打开菜单" onclick="toggleSideMenu()">⋯</button></span></h1></header>
+<header><h1><span style="display:flex;align-items:center"><img src="./ui-icons/small-tomato.png" alt=""><span>v3.0</span></span><span class="header-actions"><button class="btn btn-small btn-secondary menu-trigger" aria-label="打开菜单" onclick="toggleSideMenu()">⋯</button></span></h1></header>
 
 <div id="sideMenuOverlay" class="side-menu-overlay" onclick="if(event.target===this)closeSideMenu()">
   <aside class="side-menu" onclick="event.stopPropagation()">
@@ -157,40 +232,34 @@ body{background:var(--time-bg,var(--bg));transition:background-color .35s ease;c
 
 <div class="container">
 <section id="tab-dashboard" class="tab-content active">
-<div class="dashboard-duration card">
-  <div class="duration-icon-frame"><img src="./ui/pink-tomato.png" alt=""></div>
-  <div class="duration-main">
-    <div class="duration-kicker"><svg class="ui-icon sm"><use href="./ui-icons.svg#clock"></use></svg> 今日学习时长</div>
-    <div id="dashboardDurationValue" class="duration-value">0m</div>
-    <div class="duration-track"><div id="dashboardDurationFill" class="duration-fill" style="width:0%"></div></div>
-    <div id="dashboardDurationSubjects" class="duration-subjects"></div>
+<div class="card home-duration">
+  <div class="duration-title"><img src="./ui-icons/small-tomato.png">今日学习时长 <span class="muted" style="font-size:20px">›</span></div>
+  <div class="duration-value" id="homeDurationValue">0h 00m</div>
+  <div class="duration-bar"><i id="homeDurationFill"></i></div>
+  <img class="duration-art" src="./study-bg.png" alt="">
+  <div class="duration-subjects"><div><b>● 专业课</b><span id="homeProTime">0h 00m</span></div><div><b>● 英语</b><span id="homeEngTime">0h 00m</span></div><div><b>● 政治</b><span id="homePolTime">0h 00m</span></div></div>
+</div>
+<div class="card calendar-unified">
+  <div class="routine-week-head">
+    <h2 style="margin:0;display:flex;align-items:center;gap:5px"><img class="ui-icon" src="./ui-icons/calendar.png">学习日历</h2>
+    <div class="calendar-mode"><button id="weekModeBtn" class="active" onclick="setCalendarMode('week')">周</button><button id="monthModeBtn" onclick="setCalendarMode('month')">月</button></div>
   </div>
-  <div class="duration-note">Good Study Day!</div>
+  <div id="weekCalendarPane">
+    <div class="routine-week-head"><button class="btn btn-small btn-secondary" onclick="changeWeek(-1)">‹</button><div class="routine-week-title" id="routineWeekTitle"></div><button class="btn btn-small btn-secondary" onclick="changeWeek(1)">›</button></div>
+    <div class="routine-grid" id="routineGridContainer"></div>
+  </div>
+  <div id="monthCalendarPane" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin:6px 3px 8px"><button class="btn btn-small btn-secondary" onclick="changeMonth(-1)">‹</button><span class="muted" id="currentMonthTitle"></span><button class="btn btn-small btn-secondary" onclick="changeMonth(1)">›</button></div>
+    <div id="calendarBody"><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--sub)"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div class="month-grid" id="monthGridContainer"></div></div>
+  </div>
 </div>
-<div class="card dashboard-routine"><div class="routine-week-head"><button class="btn btn-small btn-secondary" onclick="changeWeek(-1)">‹</button><h2 style="margin:0;justify-content:center;flex:1"><span class="section-icon-title"><svg class="ui-icon sm"><use href="./ui-icons.svg#calendar"></use></svg>周历</span> <span class="muted" id="routineWeekTitle"></span></h2><button class="btn btn-small btn-secondary" onclick="changeWeek(1)">›</button></div><div class="routine-grid" id="routineGridContainer"></div><div class="muted" style="text-align:center;margin-top:7px">点击日期切换下方任务 · 左右滑动切换周</div></div>
-<div class="dashboard-main-grid">
-<div class="card study-card">
-<h2><span class="section-icon-title"><svg class="ui-icon"><use href="./ui-icons.svg#chart"></use></svg> 学习数据</span> <span class="muted">自动统计</span></h2>
-<div id="studyStats"></div>
+<div class="dashboard-grid">
+  <div class="card study-dashboard"><h2 class="h-title"><img class="ui-icon" src="./ui-icons/stats.png">学习数据 <span class="muted" style="font-size:11px;margin-left:auto">自动统计</span></h2><div id="studyStats"></div></div>
+  <div class="card timeline-preview" onclick="switchTab('mix',document.querySelector('.tab-item[data-tab="mix"]'));openMixView('timeline')"><h2 class="h-title"><img class="ui-icon" src="./ui-icons/timeline.png">时间轴 <span class="muted" style="font-size:12px;margin-left:auto">点击查看 ›</span></h2><div id="homeTimelinePreview"></div></div>
 </div>
-<div class="card status-card">
-<h2><span class="section-icon-title"><svg class="ui-icon"><use href="./ui-icons.svg#mood"></use></svg> 今日状态</span></h2>
-<div id="dayStatusContainer"></div>
-</div>
-</div>
-<div class="card calendar-card">
-<h2 style="display:flex;align-items:center;justify-content:space-between;gap:8px">
-<span>▦ 累计学习与月历全景</span>
-<span style="display:flex;align-items:center;gap:6px">
-<button class="btn btn-small btn-secondary" onclick="changeMonth(-1)">‹</button>
-<span class="muted" id="currentMonthTitle"></span>
-<button class="btn btn-small btn-secondary" onclick="changeMonth(1)">›</button>
-<button class="btn btn-small btn-secondary" onclick="toggleCalendar()" aria-label="展开或收起月历">⋯</button>
-</span></h2>
-<div id="calendarBody"><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--sub)"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div><div class="month-grid" id="monthGridContainer"></div></div></div>
-<div class="card"><h2><span id="taskListTitle">今日任务清单</span> <button class="btn btn-small ui-add-btn" onclick="openTaskModal()"><svg class="ui-icon sm"><use href="./ui-icons.svg#plus"></use></svg>添加任务</button></h2><div id="taskListContainer"></div></div>
+<div class="card day-status-card"><h2 class="h-title"><img class="ui-icon" src="./ui-icons/mood.png">今日状态</h2><div id="dayStatusContainer"></div></div>
+<div class="card"><h2><span id="taskListTitle">今日任务清单</span> <button class="btn btn-small" onclick="openTaskModal()">+ 添加任务</button></h2><div id="taskListContainer"></div></div>
 </section>
-
 <section id="tab-daily" class="tab-content"><div class="card"><h2>▦ 每日任务 <button class="btn btn-small" onclick="openTaskModal()">+ 添加任务</button></h2><div id="dailyTaskListContainer"></div></div><div class="card"><h2>◷ 每日学习时间统计 <img class="tomato-inline" src="./tomato/tomato.png" alt=""></h2><div id="dailyStudyTimeContainer"></div></div></section>
 
 <section id="tab-english" class="tab-content"><div class="card"><h2>A 每日英语错误复盘 <button class="btn btn-small" onclick="openEnglishModal()">+ 记一条错误</button></h2><p class="muted" style="margin-bottom:8px">本地永久保存错误记录与复盘心得。<span style="display:block;margin-top:3px">手机端左滑记录即可显示“修改 / 删除”。</span></p><div id="englishErrorListContainer"></div><button class="btn btn-secondary" style="margin-top:12px" onclick="openEnglishMonthlySummaryModal()">📊 查看英语月度错误总结</button></div></section>
@@ -201,9 +270,9 @@ body{background:var(--time-bg,var(--bg));transition:background-color .35s ease;c
 <div id="mixHome" class="mix-view active">
   <div class="card"><h2><span>Mix</span><span class="muted">学习数据与复盘</span></h2><p class="muted" style="line-height:1.6;margin-bottom:12px">把不常用但重要的功能集中到这里，进入后再选择具体板块。</p>
     <div class="mix-home">
-      <div class="mix-card" onclick="openMixView('weekly')"><div class="mix-card-icon">▥</div><div class="mix-card-text"><div class="mix-card-title">周报</div><div class="mix-card-sub">查看本周任务完成情况与每日学习时间</div></div><div class="mix-arrow">›</div></div>
-      <div class="mix-card" onclick="openMixView('monthly')"><div class="mix-card-icon">▦</div><div class="mix-card-text"><div class="mix-card-title">月报</div><div class="mix-card-sub">按周观察本月学习量与完成情况</div></div><div class="mix-arrow">›</div></div>
-      <div class="mix-card" onclick="openMixView('timeline')"><div class="mix-card-icon">◷</div><div class="mix-card-text"><div class="mix-card-title">时间轴</div><div class="mix-card-sub">一屏看完整周，点击某天查看详细记录</div></div><div class="mix-arrow">›</div></div>
+      <div class="mix-card" onclick="openMixView('weekly')"><div class="mix-card-icon"><img src="./ui-icons/progress.png" style="width:30px;height:30px;object-fit:contain"></div><div class="mix-card-text"><div class="mix-card-title">周报</div><div class="mix-card-sub">查看本周任务完成情况与每日学习时间</div></div><div class="mix-arrow">›</div></div>
+      <div class="mix-card" onclick="openMixView('monthly')"><div class="mix-card-icon"><img src="./ui-icons/ring.png" style="width:30px;height:30px;object-fit:contain"></div><div class="mix-card-text"><div class="mix-card-title">月报</div><div class="mix-card-sub">按周观察本月学习量与完成情况</div></div><div class="mix-arrow">›</div></div>
+      <div class="mix-card" onclick="openMixView('timeline')"><div class="mix-card-icon"><img src="./ui-icons/timeline.png" style="width:30px;height:30px;object-fit:contain"></div><div class="mix-card-text"><div class="mix-card-title">时间轴</div><div class="mix-card-sub">一屏看完整周，点击某天查看详细记录</div></div><div class="mix-arrow">›</div></div>
     </div>
   </div>
 </div>
@@ -224,7 +293,19 @@ body{background:var(--time-bg,var(--bg));transition:background-color .35s ease;c
 <div id="recallModal" class="modal recall-lock"><div class="modal-content" style="position:relative"><button class="recall-close" aria-label="退出五题回忆检测" onclick="closeRecall()">×</button><h2>◎ 五题回忆检测</h2><div id="recallProgress" class="recall-progress"></div><div id="recallBody"></div></div></div>
 <div id="vulnModal" class="modal"><div class="modal-content"><h2 id="vulnModalTitle">! 记个未完全掌握的细节点</h2><label class="muted">细节点描述：</label><textarea id="vulnDesc" rows="4"></textarea><div style="display:flex;gap:10px"><button class="btn" onclick="saveVulnerability()">保存</button><button class="btn btn-secondary" onclick="closeVulnerabilityModal()">取消</button></div></div></div>
 
-<nav class="tab-bar"><div class="tab-item active" onclick="switchTab('dashboard',this)"><span>▦</span>看板</div><div class="tab-item" onclick="switchTab('daily',this)"><span>◷</span>每日任务</div><div class="tab-item" onclick="switchTab('english',this)"><span>A</span>英语</div><div class="tab-item" onclick="switchTab('vulnerability',this)"><span>!</span>专业漏洞</div><div class="tab-item" onclick="switchTab('familiarity',this)"><span>◔</span>熟悉度</div><div class="tab-item" onclick="switchTab('mix',this)"><span>✦</span>Mix</div></nav>
+<div id="tomatoQuickMenu" class="tomato-quick-menu" aria-label="番茄快捷入口">
+  <button class="tomato-quick-item" onclick="openTomatoQuick('english')"><span class="quick-glyph">A</span><span>英语错误</span></button>
+  <button class="tomato-quick-item" onclick="openTomatoQuick('vulnerability')"><span class="quick-glyph">!</span><span>专业漏洞</span></button>
+  <button class="tomato-quick-item" onclick="openTomatoQuick('familiarity')"><span class="quick-glyph">◔</span><span>熟悉度</span></button>
+</div>
+
+<nav class="tab-bar">
+<div class="tab-item active" data-tab="dashboard" onclick="switchTab('dashboard',this)"><span></span>首页</div>
+<div class="tab-item" data-tab="daily" onclick="switchTab('daily',this)"><span></span>任务</div>
+<div class="tab-item" data-tab="focus" onclick="toggleTomatoQuickMenu()"><span></span>番茄</div>
+<div class="tab-item" data-tab="mix" onclick="switchTab('mix',this)"><span></span>统计</div>
+<div class="tab-item" data-tab="mine" onclick="toggleSideMenu()"><span></span>我的</div>
+</nav>
 
 <script>
 const KEY='zhuxi_v1_2_';
@@ -306,13 +387,40 @@ normalizeTaskData();
 
 
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function switchTab(id,el){document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab-item').forEach(x=>x.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');el.classList.add('active');if(id==='dashboard')renderDashboard();if(id==='daily')renderDailyPage();if(id==='english')renderEnglishErrors();if(id==='vulnerability'){renderVulnerabilities();renderRandom()}if(id==='familiarity')renderFamiliarity();if(id==='mix'){openMixHome();renderWeeklySummary();renderMonthlySummary();renderTimelineWeek()}}
+function toggleTomatoQuickMenu(){const m=document.getElementById('tomatoQuickMenu');if(m)m.classList.toggle('open')}
+function closeTomatoQuickMenu(){document.getElementById('tomatoQuickMenu')?.classList.remove('open')}
+function openTomatoQuick(which){closeTomatoQuickMenu();const map={english:'英语错误',vulnerability:'专业漏洞',familiarity:'熟悉度'};const id=which;if(!map[which])return;switchTab(id,document.querySelector('.tab-item[data-tab="focus"]'))}
+document.addEventListener('click',e=>{const m=document.getElementById('tomatoQuickMenu');const b=document.querySelector('.tab-item[data-tab="focus"]');if(m&&m.classList.contains('open')&&!m.contains(e.target)&&!b?.contains(e.target))m.classList.remove('open')});
+
+function switchTab(id,el){document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab-item').forEach(x=>x.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');let active=el;if(['english','vulnerability','familiarity'].includes(id))active=document.querySelector('.tab-item[data-tab=\"mine\"]');if(active)active.classList.add('active');if(id==='dashboard')renderDashboard();if(id==='daily')renderDailyPage();if(id==='english')renderEnglishErrors();if(id==='vulnerability'){renderVulnerabilities();renderRandom()}if(id==='familiarity')renderFamiliarity();if(id==='mix'){openMixHome();renderWeeklySummary();renderMonthlySummary();renderTimelineWeek()}}
 function refreshDateContext(){const now=localDateString();if(now!==todayStr){const old=todayStr;todayStr=now;if(selectedDate===old || !selectedDate)selectedDate=now;weekCursor=getMonday(now)}}
 function startDateWatcher(){setInterval(()=>{applyTimeBackground();const old=todayStr;const now=localDateString();if(now!==old){todayStr=now;if(selectedDate===old)selectedDate=now;weekCursor=getMonday(now);renderDashboard()}},60000)}
 
 function applyTimeBackground(){let h=new Date().getHours(),c=h>=6&&h<10?'#F1F5FA':h>=10&&h<16?'#FBF3E8':h>=16&&h<20?'#F8EEF3':h>=20&&h<24?'#F1ECF7':'#ECECEF';document.documentElement.style.setProperty('--time-bg',c);document.body.style.backgroundColor=c}
-function renderDashboard(){refreshDateContext();renderRoutine();renderMonth();renderDayStatus();renderTasks();renderStudyStats();renderDailyStats();renderDailyPage();renderDashboardDuration()}
-function renderDashboardDuration(){const el=document.getElementById('dashboardDurationValue');if(!el)return;const ds=todayStr;const total=secondsForDate(ds);el.textContent=formatStudySeconds(total);const pct=Math.min(100,Math.round((total/28800)*100));const fill=document.getElementById('dashboardDurationFill');if(fill)fill.style.width=pct+'%';const groups=['专业课','英语','政治','其他'];const palette={'专业课':'#f07f86','英语':'#efb04e','政治':'#9ab67a','其他':'#b79ad4'};const wrap=document.getElementById('dashboardDurationSubjects');if(wrap){wrap.innerHTML=groups.map(s=>{let sec=0;tasks.filter(t=>t.date===ds&&t.subject===s).forEach(t=>{const e=studyTimeData[String(t.id)];if(e){sec+=Number(e.total)||0;if(e.running&&e.startedAt)sec+=Math.max(0,Math.floor((Date.now()-e.startedAt)/1000))}});return `<span class="duration-subject"><i style="background:${palette[s]}"></i>${s} ${formatStudySeconds(sec)}</span>`}).join('')}}
+function setCalendarMode(mode){
+  const w=document.getElementById('weekCalendarPane'),m=document.getElementById('monthCalendarPane');
+  if(!w||!m)return;
+  w.style.display=mode==='week'?'block':'none'; m.style.display=mode==='month'?'block':'none';
+  document.getElementById('weekModeBtn')?.classList.toggle('active',mode==='week');
+  document.getElementById('monthModeBtn')?.classList.toggle('active',mode==='month');
+  if(mode==='month')renderMonth(); else renderRoutine();
+}
+function renderHomeDuration(){
+  const map=studyTimeData?.[todayStr]||{};
+  const vals={pro:Number(map['专业课']||0),eng:Number(map['英语']||0),pol:Number(map['政治']||0)};
+  const total=vals.pro+vals.eng+vals.pol+Number(map['其他']||0);
+  const fmt=m=>{m=Math.max(0,Math.round(m));return `${Math.floor(m/60)}h ${String(m%60).padStart(2,'0')}m`};
+  const v=document.getElementById('homeDurationValue'); if(v)v.textContent=fmt(total);
+  const fill=document.getElementById('homeDurationFill'); if(fill)fill.style.width=Math.min(100,total/480*100)+'%';
+  ['pro','eng','pol'].forEach(k=>{const e=document.getElementById('home'+({pro:'Pro',eng:'Eng',pol:'Pol'}[k])+'Time');if(e)e.textContent=fmt(vals[k])});
+}
+function renderHomeTimelinePreview(){
+ const el=document.getElementById('homeTimelinePreview'); if(!el)return;
+ const rows=(timelineItems||[]).filter(x=>x.date===todayStr).sort((a,b)=>String(a.start||'').localeCompare(String(b.start||''))).slice(0,4);
+ el.innerHTML=rows.length?rows.map((x,i)=>`<div class="preview-row"><i class="preview-dot" style="background:${x.type==='other'?'#9aae78':'#ef7c82'}"></i><span class="preview-time">${esc(x.start||'')} – ${esc(x.end||'')}</span><span class="preview-text">${esc(x.desc||x.subject||'学习')}</span></div>`).join(''):'<div class="muted" style="padding:8px 0;text-align:center">今天还没有时间轴记录</div>';
+}
+
+function renderDashboard(){refreshDateContext();renderRoutine();renderMonth();renderDayStatus();renderTasks();renderStudyStats();renderDailyStats();renderDailyPage();renderHomeDuration();renderHomeTimelinePreview()}
 
 function secondsForDate(ds){let total=0;tasks.forEach(t=>{if(t.date!==ds)return;let e=studyTimeData[String(t.id)];if(!e)return;total+=Number(e.total)||0;if(e.running&&e.startedAt)total+=Math.max(0,Math.floor((Date.now()-e.startedAt)/1000))});return total}
 function renderDailyStats(){const el=document.getElementById('dailyStudyTimeContainer');if(!el)return;const ds=selectedDate||todayStr,groups=['英语','政治','专业课','其他'];let vals=groups.map(subject=>{let sec=0;tasks.filter(t=>t.date===ds&&t.subject===subject).forEach(t=>{let e=studyTimeData[String(t.id)];if(e){sec+=Number(e.total)||0;if(e.running&&e.startedAt)sec+=Math.max(0,Math.floor((Date.now()-e.startedAt)/1000))}});return {subject,sec}});let total=vals.reduce((a,x)=>a+x.sec,0);el.innerHTML=`<div class="daily-time-grid">${vals.map(x=>`<div class="daily-time-item"><div class="daily-time-subject">${x.subject}</div><b>${formatStudySeconds(x.sec)}</b></div>`).join('')}</div><div class="daily-total">今日总计 <b>${formatStudySeconds(total)}</b></div>`}
@@ -459,9 +567,9 @@ function renderDayStatus(){
   if(label)label.textContent=ds;
   const mood=moods[ds],coffee=coffees[ds],distract=distracts[ds];
   box.innerHTML=`<div class="day-status-grid">
-    <button class="day-status-item" onclick="openMoodPicker('${ds}')"><span class="day-status-name"><svg class="ui-icon sm"><use href="./ui-icons.svg#mood"></use></svg> 心情</span><span class="day-status-value">${mood?moodFace(mood,true)+' '+esc(MOODS.find(m=>m.id===mood)?.name||'已记录'):'未记录'}</span></button>
-    <button class="day-status-item" onclick="openCoffeePicker('${ds}')"><span class="day-status-name"><svg class="ui-icon sm"><use href="./ui-icons.svg#clock"></use></svg> 咖啡</span><span class="day-status-value">${coffee?esc(coffeeSummary(coffee).replace(/^已记录：/,'').replace(/^☕ /,'')):'未记录'}</span></button>
-    <button class="day-status-item" onclick="openDistractPicker('${ds}')"><span class="day-status-name"><svg class="ui-icon sm"><use href="./ui-icons.svg#spark"></use></svg> Distract</span><span class="day-status-value">${distract!==undefined?esc(String(distract)+' 分'):'未记录'}</span></button>
+    <button class="day-status-item" onclick="openMoodPicker('${ds}')"><span class="day-status-name">心情</span><span class="day-status-value">${mood?moodFace(mood,true)+' '+esc(MOODS.find(m=>m.id===mood)?.name||'已记录'):'未记录'}</span></button>
+    <button class="day-status-item" onclick="openCoffeePicker('${ds}')"><span class="day-status-name">咖啡</span><span class="day-status-value">${coffee?esc(coffeeSummary(coffee).replace(/^已记录：/,'').replace(/^☕ /,'')):'未记录'}</span></button>
+    <button class="day-status-item" onclick="openDistractPicker('${ds}')"><span class="day-status-name">Distract</span><span class="day-status-value">${distract!==undefined?esc(String(distract)+' 分'):'未记录'}</span></button>
   </div>`;
 }
 function openMoodPicker(ds){const current=moods[ds]||'';document.getElementById('genericTitle').textContent='◌ '+ds+' 心情';document.getElementById('genericBody').innerHTML=`<div class="mood-picker">${MOODS.map(m=>`<button class="mood-option ${current===m.id?'selected':''}" onclick="setMoodQuick('${ds}','${m.id}')">${moodFace(m.id)}<span>${m.name}</span></button>`).join('')}</div><button class="btn btn-secondary" style="margin-top:10px" onclick="clearMoodQuick('${ds}')">清除记录</button>`;document.getElementById('genericModal').classList.add('active')}
@@ -520,7 +628,7 @@ function resetTaskTimer(id){if(String(focusTaskId)===String(id))closeFocus();con
 function toggleTaskTimer(id){const e=studyTimeData[String(id)];if(e?.running)pauseTaskTimer(id);else startTaskTimer(id)}
 function startTimerTicker(){if(timerTickHandle)return;timerTickHandle=setInterval(()=>{if(activeTimerTaskId==null)return;const e=studyTimeData[String(activeTimerTaskId)];if(!e?.running){stopTimerTicker();return}renderTaskTimersOnly();if(document.getElementById('mixTimeline')?.classList.contains('active')){renderTimelineWeek()}},1000)}
 function stopTimerTicker(){if(timerTickHandle){clearInterval(timerTickHandle);timerTickHandle=null}}
-function renderTaskTimersOnly(){renderDashboardDuration();document.querySelectorAll('[data-task-timer]').forEach(el=>{const id=el.dataset.taskTimer,e=studyTimeData[String(id)]||{},live=(e.running&&e.startedAt)?Math.floor((Date.now()-e.startedAt)/1000):0;const total=(Number(e.total)||0)+live;el.querySelector('.timer-time')?.replaceChildren(document.createTextNode(formatStudySeconds(total)));const b=el.querySelector('.timer-main');if(b)b.textContent=e.running?'暂停':'开始';})}
+function renderTaskTimersOnly(){document.querySelectorAll('[data-task-timer]').forEach(el=>{const id=el.dataset.taskTimer,e=studyTimeData[String(id)]||{},live=(e.running&&e.startedAt)?Math.floor((Date.now()-e.startedAt)/1000):0;const total=(Number(e.total)||0)+live;el.querySelector('.timer-time')?.replaceChildren(document.createTextNode(formatStudySeconds(total)));const b=el.querySelector('.timer-main');if(b)b.textContent=e.running?'暂停':'开始';})}
 function toggleTask(id){
   const t=tasks.find(x=>String(x.id)===String(id));
   if(!t)return;

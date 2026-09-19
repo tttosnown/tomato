@@ -182,7 +182,7 @@ header .header-actions .menu-trigger{width:42px;height:42px;border-radius:15px;b
 .dashboard-grid>.card{margin-bottom:16px}
 .study-dashboard{min-width:0}
 .day-status-card{min-width:0}
-.day-status-card #dayStatusContainer{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.day-status-card #dayStatusContainer{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.day-status-card #dayStatusContainer>.day-status-grid{grid-column:1 / -1;width:100%;min-width:0;box-sizing:border-box}.day-status-card .day-status-grid{grid-template-columns:repeat(3,minmax(0,1fr));width:100%}.day-status-card .day-status-item{width:100%;box-sizing:border-box;min-width:0}
 .day-record-item{background:rgba(255,255,255,.56)!important;border:1px solid rgba(120,100,90,.08)!important;border-radius:17px!important;padding:12px 10px!important;min-height:68px;display:flex!important;flex-direction:column;justify-content:center;align-items:flex-start!important}
 .day-record-label{font-size:11px;color:#827972}.day-record-value{font-size:12px;margin-top:4px;line-height:1.3}
 .study-stat-grid{gap:6px}
@@ -212,130 +212,11 @@ nav.tab-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:mi
 #tab-dashboard .calendar-card{display:none}
 #tab-dashboard>.day-status-card{display:block;grid-column:1 / -1;margin-bottom:16px}
 @media(max-width:390px){.feature-row{gap:2px}.feature-item img{width:46px;height:46px}.feature-item{font-size:10px}.dashboard-grid{gap:9px}.card{padding:15px}.duration-art{width:205px}.duration-value{font-size:38px}}
-
-/* v5 icon normalization: every extracted icon sits in a centered, fixed visual box. */
-.ui-icon{
-  width:24px !important;
-  height:24px !important;
-  object-fit:contain !important;
-  object-position:center !important;
-  flex:0 0 24px;
-  display:block;
-  margin:0 !important;
-}
-.h-title{
-  display:flex !important;
-  align-items:center !important;
-  gap:7px !important;
-}
-.mix-card-icon{
-  width:46px !important;
-  height:46px !important;
-  min-width:46px !important;
-  min-height:46px !important;
-  flex:0 0 46px !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-}
-.mix-card-icon img{
-  width:30px !important;
-  height:30px !important;
-  max-width:30px !important;
-  max-height:30px !important;
-  object-fit:contain !important;
-  object-position:center !important;
-  display:block !important;
-  margin:0 !important;
-}
-.duration-title{
-  display:flex !important;
-  align-items:center !important;
-  gap:7px !important;
-}
-.duration-title img{
-  width:30px !important;
-  height:30px !important;
-  object-fit:contain !important;
-  object-position:center !important;
-  display:block !important;
-  flex:0 0 30px !important;
-  margin:0 !important;
-}
-.day-status-grid{
-  display:grid !important;
-  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
-  gap:10px !important;
-  width:100% !important;
-}
-.day-status-item{
-  width:100% !important;
-  min-width:0 !important;
-  min-height:58px !important;
-  box-sizing:border-box !important;
-  display:flex !important;
-  flex-direction:column !important;
-  align-items:center !important;
-  justify-content:center !important;
-  text-align:center !important;
-  gap:4px !important;
-  padding:9px 6px !important;
-}
-.day-status-name,
-.day-status-value{
-  width:100% !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  text-align:center !important;
-  margin:0 !important;
-}
-.day-status-value img{
-  width:24px !important;
-  height:24px !important;
-  object-fit:contain !important;
-  object-position:center !important;
-  display:block !important;
-  margin:0 auto !important;
-}
-.tab-item{
-  min-width:0 !important;
-  flex:1 1 0 !important;
-  display:flex !important;
-  flex-direction:column !important;
-  align-items:center !important;
-  justify-content:flex-end !important;
-  text-align:center !important;
-}
-.tab-item span{
-  width:42px !important;
-  height:36px !important;
-  margin:0 auto 2px !important;
-  background-position:center center !important;
-  background-repeat:no-repeat !important;
-  background-size:34px 34px !important;
-  display:block !important;
-  flex:0 0 36px !important;
-}
-.tab-item:nth-child(3) span{
-  width:52px !important;
-  height:48px !important;
-  flex-basis:48px !important;
-  margin:-15px auto 0 !important;
-  background-size:56px 56px !important;
-}
-.mix-card{
-  min-width:0 !important;
-}
-.mix-card-text{
-  min-width:0 !important;
-}
-
 </style>
 </head>
 <body>
 <div id="startupSplash" aria-label="zhuxi 启动封面"><div id="startupSplashInner"><img id="startupSplashIcon" src="./tomato/logo.png" alt="筑习" onerror="this.style.display='none';document.getElementById('startupSplashFallback').style.display='flex'"><div id="startupSplashFallback" aria-hidden="true">筑</div><div id="startupSplashName">zhuxi</div></div></div>
-<header><h1><span style="display:flex;align-items:center"><img src="./ui-icons/small-tomato.png" alt=""><span>v3.0</span></span><span class="header-actions"><button class="btn btn-small btn-secondary menu-trigger" aria-label="打开菜单" onclick="toggleSideMenu()">⋯</button></span></h1></header>
+<header><h1><span style="display:flex;align-items:center"><img src="./ui-icons/small-tomato.png" alt=""><span>v3.0 · A5</span></span><span class="header-actions"><button class="btn btn-small btn-secondary menu-trigger" aria-label="打开菜单" onclick="toggleSideMenu()">⋯</button></span></h1></header>
 
 <div id="sideMenuOverlay" class="side-menu-overlay" onclick="if(event.target===this)closeSideMenu()">
   <aside class="side-menu" onclick="event.stopPropagation()">

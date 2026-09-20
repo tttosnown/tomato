@@ -15,10 +15,10 @@
 <link rel="apple-touch-icon" href="./icon-180.png">
 <style>
 @font-face{font-family:'HongLeiHL2';src:url('./fonts/hongleiHL2.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:'XimaiXihuan';src:url('./fonts/LemiShiguang.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'LemiShiguang';src:url('./fonts/LemiShiguang.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
 
 :root{--bg:#F2F2F7;--card:#FFF;--text:#1C1C1E;--sub:#5F6F82;--line:#C8D0DA;--accent:#93AC4E;--accent-soft:#FFCC64;--accent-pale:#F1F0BA;--accent-deep:#6D7F32;--green:#93AC4E;--red:#E52113;--r:12px}
-*{box-sizing:border-box;margin:0;padding:0;font-family:'HongLeiHL2','XimaiXihuan',-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'HongLeiHL2','LemiShiguang',-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;-webkit-tap-highlight-color:transparent}
 body{background:var(--bg);color:var(--text);padding-bottom:90px;padding-top:env(safe-area-inset-top,0px);max-width:600px;margin:auto}
 header{background:rgba(255,255,255,.88);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;padding:16px 20px;border-bottom:.5px solid var(--line);padding-top:calc(16px + env(safe-area-inset-top,0px))}
 header h1{font-size:18px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
@@ -133,7 +133,7 @@ header h1{height:38px;font-size:0}
 header h1>span:first-child{display:flex!important;align-items:center;gap:5px}
 header h1>span:first-child img{width:30px;height:30px;object-fit:contain}
 header h1>span:first-child span{font-size:22px!important;color:#4b4541!important;font-weight:700!important;letter-spacing:.3px}
-header h1>span:first-child:before{content:'筑习';font-size:27px;color:#df6f73;font-weight:700;letter-spacing:1px;font-family:'HongLeiHL2','XimaiXihuan',cursive;margin-right:2px}
+header h1>span:first-child:before{content:'筑习';font-size:27px;color:#df6f73;font-weight:700;letter-spacing:1px;font-family:'HongLeiHL2','LemiShiguang',cursive;margin-right:2px}
 header .header-actions .menu-trigger{width:42px;height:42px;border-radius:15px;background:rgba(239,124,130,.96)!important;color:#fff!important;border:0!important;font-size:25px;line-height:1}
 .container{padding:8px 16px 0}
 .card{background:var(--card);border:1px solid rgba(120,90,80,.10);border-radius:var(--r);padding:18px;margin-bottom:16px;box-shadow:0 5px 20px rgba(116,91,75,.045);backdrop-filter:blur(8px)}
@@ -408,13 +408,22 @@ function setCalendarMode(mode){
   if(mode==='month')renderMonth(); else renderRoutine();
 }
 function renderHomeDuration(){
-  const map=studyTimeData?.[todayStr]||{};
-  const vals={pro:Number(map['专业课']||0),eng:Number(map['英语']||0),pol:Number(map['政治']||0)};
-  const total=vals.pro+vals.eng+vals.pol+Number(map['其他']||0);
-  const fmt=m=>{m=Math.max(0,Math.round(m));return `${Math.floor(m/60)}h ${String(m%60).padStart(2,'0')}m`};
+  // studyTimeData is keyed by task id, not by date/subject. Aggregate today's task records here.
+  const vals={pro:0,eng:0,pol:0,other:0};
+  const subjectKey=t=>{const s=String(t?.subject||'其他');return s==='专业课'?'pro':s==='英语'?'eng':s==='政治'?'pol':'other'};
+  (tasks||[]).forEach(t=>{
+    if(t?.date!==todayStr)return;
+    const e=studyTimeData?.[String(t.id)];
+    if(!e)return;
+    let sec=Number(e.total)||0;
+    if(e.running&&e.startedAt)sec+=Math.max(0,Math.floor((Date.now()-e.startedAt)/1000));
+    vals[subjectKey(t)]+=sec;
+  });
+  const total=vals.pro+vals.eng+vals.pol+vals.other;
+  const fmt=s=>{s=Math.max(0,Math.round(s));return `${Math.floor(s/3600)}h ${String(Math.floor(s%3600/60)).padStart(2,'0')}m`};
   const v=document.getElementById('homeDurationValue'); if(v)v.textContent=fmt(total);
-  const fill=document.getElementById('homeDurationFill'); if(fill)fill.style.width=Math.min(100,total/480*100)+'%';
-  ['pro','eng','pol'].forEach(k=>{const e=document.getElementById('home'+({pro:'Pro',eng:'Eng',pol:'Pol'}[k])+'Time');if(e)e.textContent=fmt(vals[k])});
+  const fill=document.getElementById('homeDurationFill'); if(fill)fill.style.width=Math.min(100,total/28800*100)+'%';
+  [['pro','Pro'],['eng','Eng'],['pol','Pol']].forEach(([k,n])=>{const e=document.getElementById('home'+n+'Time');if(e)e.textContent=fmt(vals[k])});
 }
 function renderHomeTimelinePreview(){
  const el=document.getElementById('homeTimelinePreview'); if(!el)return;
@@ -628,7 +637,7 @@ function accrueTaskTimer(id){const e=studyTimeData[String(id)];if(!e?.running||!
 function pauseTaskTimer(id){const key=String(id),e=studyTimeData[key];if(!e?.running)return;const sessionStart=Number(e.sessionStartedAt||0),realStart=Number(e.sessionStartedRealAt||e.startedAt||0),endReal=Date.now();accrueTaskTimer(id);e.running=false;e.startedAt=null;e.sessionStartedAt=null;e.sessionStartedRealAt=null;studyTimeData[key]=e;if(sessionStart&&endReal>realStart){const forcedDate=e.date||tasks.find(t=>String(t.id)===key)?.date||todayStr;recordStudySession(id,sessionStart,sessionStart+(endReal-realStart),forcedDate)}if(String(activeTimerTaskId)===key){activeTimerTaskId=null;activeTimerStartedAt=0;stopTimerTicker()}saveStudyTime();renderDashboard();if(String(focusTaskId)===String(id))updateFocusView()}
 function resetTaskTimer(id){if(String(focusTaskId)===String(id))closeFocus();const key=String(id);if(String(activeTimerTaskId)===key){const e=studyTimeData[key];if(e?.running){e.running=false;e.startedAt=null;e.sessionStartedAt=null;e.sessionStartedRealAt=null}activeTimerTaskId=null;stopTimerTicker()}studyTimeData[key]={total:0,running:false,startedAt:null,sessionStartedAt:null,date:tasks.find(t=>String(t.id)===key)?.date||todayStr};studySessions=studySessions.filter(x=>String(x.taskId)!==key);saveStudyTime();saveStudySessions();renderDashboard()}
 function toggleTaskTimer(id){const e=studyTimeData[String(id)];if(e?.running)pauseTaskTimer(id);else startTaskTimer(id)}
-function startTimerTicker(){if(timerTickHandle)return;timerTickHandle=setInterval(()=>{if(activeTimerTaskId==null)return;const e=studyTimeData[String(activeTimerTaskId)];if(!e?.running){stopTimerTicker();return}renderTaskTimersOnly();if(document.getElementById('mixTimeline')?.classList.contains('active')){renderTimelineWeek()}},1000)}
+function startTimerTicker(){if(timerTickHandle)return;timerTickHandle=setInterval(()=>{if(activeTimerTaskId==null)return;const e=studyTimeData[String(activeTimerTaskId)];if(!e?.running){stopTimerTicker();return}renderTaskTimersOnly();renderHomeDuration();if(document.getElementById('mixTimeline')?.classList.contains('active')){renderTimelineWeek()}},1000)}
 function stopTimerTicker(){if(timerTickHandle){clearInterval(timerTickHandle);timerTickHandle=null}}
 function renderTaskTimersOnly(){document.querySelectorAll('[data-task-timer]').forEach(el=>{const id=el.dataset.taskTimer,e=studyTimeData[String(id)]||{},live=(e.running&&e.startedAt)?Math.floor((Date.now()-e.startedAt)/1000):0;const total=(Number(e.total)||0)+live;el.querySelector('.timer-time')?.replaceChildren(document.createTextNode(formatStudySeconds(total)));const b=el.querySelector('.timer-main');if(b)b.textContent=e.running?'暂停':'开始';})}
 function toggleTask(id){

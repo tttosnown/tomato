@@ -408,13 +408,22 @@ function setCalendarMode(mode){
   if(mode==='month')renderMonth(); else renderRoutine();
 }
 function renderHomeDuration(){
-  const map=studyTimeData?.[todayStr]||{};
-  const vals={pro:Number(map['专业课']||0),eng:Number(map['英语']||0),pol:Number(map['政治']||0)};
-  const total=vals.pro+vals.eng+vals.pol+Number(map['其他']||0);
-  const fmt=m=>{m=Math.max(0,Math.round(m));return `${Math.floor(m/60)}h ${String(m%60).padStart(2,'0')}m`};
+  // studyTimeData is keyed by task id, not by date/subject. Aggregate today's task records here.
+  const vals={pro:0,eng:0,pol:0,other:0};
+  const subjectKey=t=>{const s=String(t?.subject||'其他');return s==='专业课'?'pro':s==='英语'?'eng':s==='政治'?'pol':'other'};
+  (tasks||[]).forEach(t=>{
+    if(t?.date!==todayStr)return;
+    const e=studyTimeData?.[String(t.id)];
+    if(!e)return;
+    let sec=Number(e.total)||0;
+    if(e.running&&e.startedAt)sec+=Math.max(0,Math.floor((Date.now()-e.startedAt)/1000));
+    vals[subjectKey(t)]+=sec;
+  });
+  const total=vals.pro+vals.eng+vals.pol+vals.other;
+  const fmt=s=>{s=Math.max(0,Math.round(s));return `${Math.floor(s/3600)}h ${String(Math.floor(s%3600/60)).padStart(2,'0')}m`};
   const v=document.getElementById('homeDurationValue'); if(v)v.textContent=fmt(total);
-  const fill=document.getElementById('homeDurationFill'); if(fill)fill.style.width=Math.min(100,total/480*100)+'%';
-  ['pro','eng','pol'].forEach(k=>{const e=document.getElementById('home'+({pro:'Pro',eng:'Eng',pol:'Pol'}[k])+'Time');if(e)e.textContent=fmt(vals[k])});
+  const fill=document.getElementById('homeDurationFill'); if(fill)fill.style.width=Math.min(100,total/28800*100)+'%';
+  [['pro','Pro'],['eng','Eng'],['pol','Pol']].forEach(([k,n])=>{const e=document.getElementById('home'+n+'Time');if(e)e.textContent=fmt(vals[k])});
 }
 function renderHomeTimelinePreview(){
  const el=document.getElementById('homeTimelinePreview'); if(!el)return;
@@ -628,7 +637,7 @@ function accrueTaskTimer(id){const e=studyTimeData[String(id)];if(!e?.running||!
 function pauseTaskTimer(id){const key=String(id),e=studyTimeData[key];if(!e?.running)return;const sessionStart=Number(e.sessionStartedAt||0),realStart=Number(e.sessionStartedRealAt||e.startedAt||0),endReal=Date.now();accrueTaskTimer(id);e.running=false;e.startedAt=null;e.sessionStartedAt=null;e.sessionStartedRealAt=null;studyTimeData[key]=e;if(sessionStart&&endReal>realStart){const forcedDate=e.date||tasks.find(t=>String(t.id)===key)?.date||todayStr;recordStudySession(id,sessionStart,sessionStart+(endReal-realStart),forcedDate)}if(String(activeTimerTaskId)===key){activeTimerTaskId=null;activeTimerStartedAt=0;stopTimerTicker()}saveStudyTime();renderDashboard();if(String(focusTaskId)===String(id))updateFocusView()}
 function resetTaskTimer(id){if(String(focusTaskId)===String(id))closeFocus();const key=String(id);if(String(activeTimerTaskId)===key){const e=studyTimeData[key];if(e?.running){e.running=false;e.startedAt=null;e.sessionStartedAt=null;e.sessionStartedRealAt=null}activeTimerTaskId=null;stopTimerTicker()}studyTimeData[key]={total:0,running:false,startedAt:null,sessionStartedAt:null,date:tasks.find(t=>String(t.id)===key)?.date||todayStr};studySessions=studySessions.filter(x=>String(x.taskId)!==key);saveStudyTime();saveStudySessions();renderDashboard()}
 function toggleTaskTimer(id){const e=studyTimeData[String(id)];if(e?.running)pauseTaskTimer(id);else startTaskTimer(id)}
-function startTimerTicker(){if(timerTickHandle)return;timerTickHandle=setInterval(()=>{if(activeTimerTaskId==null)return;const e=studyTimeData[String(activeTimerTaskId)];if(!e?.running){stopTimerTicker();return}renderTaskTimersOnly();if(document.getElementById('mixTimeline')?.classList.contains('active')){renderTimelineWeek()}},1000)}
+function startTimerTicker(){if(timerTickHandle)return;timerTickHandle=setInterval(()=>{if(activeTimerTaskId==null)return;const e=studyTimeData[String(activeTimerTaskId)];if(!e?.running){stopTimerTicker();return}renderTaskTimersOnly();renderHomeDuration();if(document.getElementById('mixTimeline')?.classList.contains('active')){renderTimelineWeek()}},1000)}
 function stopTimerTicker(){if(timerTickHandle){clearInterval(timerTickHandle);timerTickHandle=null}}
 function renderTaskTimersOnly(){document.querySelectorAll('[data-task-timer]').forEach(el=>{const id=el.dataset.taskTimer,e=studyTimeData[String(id)]||{},live=(e.running&&e.startedAt)?Math.floor((Date.now()-e.startedAt)/1000):0;const total=(Number(e.total)||0)+live;el.querySelector('.timer-time')?.replaceChildren(document.createTextNode(formatStudySeconds(total)));const b=el.querySelector('.timer-main');if(b)b.textContent=e.running?'暂停':'开始';})}
 function toggleTask(id){

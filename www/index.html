@@ -217,6 +217,9 @@ nav.tab-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:mi
 @media(max-width:390px){.feature-row{gap:2px}.feature-item img{width:46px;height:46px}.feature-item{font-size:10px}.dashboard-grid{gap:9px}.card{padding:15px}.duration-art{width:205px}.duration-value{font-size:38px}}
 
 /* Soft paper texture: white surface at ~60% opacity + subtle colored texture in multiply mode. */
+/* The task control panel is intentionally opaque: the colored task card underneath must not show through. */
+.task-timer{background-color:#F7F4F8 !important;background-image:url('./paper-texture-soft.png') !important;background-repeat:repeat !important;background-size:720px 720px !important;background-blend-mode:multiply !important;opacity:1 !important;}
+
 .paper-texture-surface,
 header,
 nav.tab-bar,

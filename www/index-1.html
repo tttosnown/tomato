@@ -113,46 +113,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}button:
 #startupSplash img{width:92px;height:92px;object-fit:contain;border-radius:22px;margin-bottom:16px}#startupSplashFallback{display:none;width:92px;height:92px;border-radius:22px;background:#f0f0f2;color:#111;align-items:center;justify-content:center;font-size:46px;font-weight:600;letter-spacing:-4px;margin-bottom:16px;border:1px solid #ddd}
 #startupSplashName{font-size:22px;letter-spacing:1.5px;color:#111;font-weight:500}
 
-.daily-time-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.daily-time-item{background:#F7F4F8;border-radius:10px;padding:11px}.daily-time-subject{font-size:11px;color:var(--sub);margin-bottom:4px}.daily-total{margin-top:10px;padding:11px;border-radius:10px;background:#EEE8F2;text-align:center}.time-chart-title{font-size:12px;font-weight:600;margin:12px 0 8px}.time-bars{display:flex;align-items:flex-end;justify-content:space-between;gap:7px;height:140px;padding:0 4px}.time-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;font-size:9px}.time-bar{width:100%;max-width:30px;background:#111;border-radius:5px 5px 2px 2px;min-height:4px}.time-bar-col small{font-size:10px;color:var(--sub)}.weekly-time-meta{text-align:center;font-size:12px;margin-top:8px;padding:9px;background:#F7F4F8;border-radius:8px}
-
-/* Soft paper texture: white surface at ~60% opacity + subtle colored texture in multiply mode. */
-/* The task control panel is intentionally opaque: the colored task card underneath must not show through. */
-.task-timer{background-color:#F7F4F8 !important;background-image:url('./paper-texture-soft.png') !important;background-repeat:repeat !important;background-size:720px 720px !important;background-blend-mode:multiply !important;opacity:1 !important;}
-
-.paper-texture-surface,
-header,
-nav.tab-bar,
-.day-status-item,
-.day-records,
-.day-record-item,
-.side-menu,
-.focus-panel,
-.calendar-mode,
-.study-stat-box,
-.tomato-quick-menu,
-.tomato-quick-item,
-.card,
-.mix-card,
-.task-item,
-.swipe-content,
-.timeline-day,
-.timeline-live-item,
-.routine-day,
-.month-cell,
-.tree-node-content,
-.modal-content,
-.recall-question,
-.recall-opt,
-[style*="background:#F9F9FB"] {
-  background-color:rgba(255,255,255,.60);
-  background-image:url('./paper-texture-soft.png');
-  background-repeat:repeat;
-  background-size:720px 720px;
-  background-blend-mode:multiply;
-}
-
-
-</style>
+.daily-time-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.daily-time-item{background:#F7F4F8;border-radius:10px;padding:11px}.daily-time-subject{font-size:11px;color:var(--sub);margin-bottom:4px}.daily-total{margin-top:10px;padding:11px;border-radius:10px;background:#EEE8F2;text-align:center}.time-chart-title{font-size:12px;font-weight:600;margin:12px 0 8px}.time-bars{display:flex;align-items:flex-end;justify-content:space-between;gap:7px;height:140px;padding:0 4px}.time-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;font-size:9px}.time-bar{width:100%;max-width:30px;background:#111;border-radius:5px 5px 2px 2px;min-height:4px}.time-bar-col small{font-size:10px;color:var(--sub)}.weekly-time-meta{text-align:center;font-size:12px;margin-top:8px;padding:9px;background:#F7F4F8;border-radius:8px}</style>
 </head>
 <body>
 <div id="startupSplash" aria-label="zhuxi 启动封面"><div id="startupSplashInner"><img id="startupSplashIcon" src="./icon-180.png" alt="筑习" onerror="this.style.display='none';document.getElementById('startupSplashFallback').style.display='flex'"><div id="startupSplashFallback" aria-hidden="true">筑</div><div id="startupSplashName">zhuxi</div></div></div>
